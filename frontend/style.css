@@ -1,0 +1,329 @@
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+}
+
+/* LOGIN */
+.login-body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ffd6e8,#cde7ff);
+}
+
+.login-box{
+  background:white;
+  padding:40px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,0.1);
+}
+
+.cat{
+  font-size:70px;
+  animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-15px)}
+}
+
+button{
+  background:#ffb6c1;
+  border:none;
+  padding:10px 20px;
+  border-radius:20px;
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+input{
+  width:100%;
+  margin:8px 0;
+  padding:8px;
+  border-radius:12px;
+  border:1px solid #eee;
+}
+
+/* DASHBOARD */
+.dashboard-body{
+  background:#f8f3ff;
+}
+
+header{
+  background:#d8b4ff;
+  padding:15px;
+  text-align:center;
+  color:white;
+}
+
+.cat-bot{
+  text-align:center;
+  margin:20px;
+}
+
+.cat-face{
+  font-size:60px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+ul{
+  list-style:none;
+  padding:0;
+}
+
+li{
+  display:flex;
+  justify-content:space-between;
+  background:#ffe6f2;
+  padding:8px;
+  border-radius:12px;
+  margin:5px 0;
+}
+
+#calendar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+}
+
+.calendar-day{
+  padding:10px;
+  text-align:center;
+  background:#e9d5ff;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.calendar-day:hover{
+  background:#c084fc;
+  color:white;
+}
+
+/* WATER GLASSES */
+.water-container{
+  display:flex;
+  gap:8px;
+}
+
+.glass{
+  width:30px;
+  height:50px;
+  border:2px solid #60a5fa;
+  border-radius:8px;
+  cursor:pointer;
+  position:relative;
+}
+
+.glass.filled{
+  background:#60a5fa;
+}
+/* CALENDAR EVENT STYLE */
+.has-event{
+  position:relative;
+}
+
+.has-event::after{
+  content:"🐱";
+  position:absolute;
+  bottom:2px;
+  right:4px;
+  font-size:14px;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:white;
+  padding:25px;
+  border-radius:25px;
+  width:320px;
+  text-align:center;
+  animation:fadeIn 0.3s ease-in-out;
+}
+
+.close{
+  float:right;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.modal-cats{
+  margin-top:15px;
+  font-size:22px;
+}
+
+@keyframes fadeIn{
+  from{transform:scale(0.8);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+/* WALKING CATS */
+.cat-walker{
+  position:fixed;
+  bottom:10px;
+  left:-50px;
+  font-size:30px;
+  animation:walk 20s linear infinite;
+  z-index:1000;
+}
+
+.delay1{
+  bottom:60px;
+  animation-delay:6s;
+}
+
+.delay2{
+  bottom:110px;
+  animation-delay:12s;
+}
+
+@keyframes walk{
+  0%{ left:-50px; }
+  100%{ left:110%; }
+}
+.reminder-popup{
+  position:fixed;
+  top:30%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff0f5;
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  display:none;
+  z-index:2000;
+  text-align:center;
+  animation:popIn 0.4s ease;
+}
+
+@keyframes popIn{
+  from{ transform:translate(-50%, -20px); opacity:0; }
+  to{ transform:translate(-50%, 0); opacity:1; }
+}
+.water-star{
+  position:fixed;
+  top:20%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fffacd;
+  padding:20px;
+  border-radius:20px;
+  font-weight:bold;
+  font-size:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  animation:fadeStar 0.5s ease;
+  z-index:3000;
+}
+
+@keyframes fadeStar{
+  from{ opacity:0; transform:translate(-50%,-20px); }
+  to{ opacity:1; transform:translate(-50%,0); }
+}
+.water-section{
+  text-align:center;
+  margin-top:20px;
+}
+
+.glasses{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:15px 0;
+}
+
+.glass{
+  width:45px;
+  height:70px;
+  border:2px solid #89CFF0;
+  border-radius:10px 10px 5px 5px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  background:white;
+  transition:transform 0.2s ease;
+}
+
+.glass:hover{
+  transform:scale(1.1);
+}
+
+.glass.filled::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#a2d2ff;
+  animation:fillWater 0.4s ease-in;
+}
+
+@keyframes fillWater{
+  from{ height:0; }
+  to{ height:100%; }
+}
+
+.water-praise{
+  font-weight:500;
+  color:#555;
+  margin-top:10px;
+}
+.cat-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  font-size: 14px;
+  animation: slideIn 0.5s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(50px); opacity:0; }
+  to { transform: translateY(0); opacity:1; }
+}
+
+
+
+
+
+
+
+
+
+
+
