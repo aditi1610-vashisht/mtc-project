@@ -23,7 +23,9 @@
     <h3>🌸 To Do</h3>
     <input type="text" id="taskInput" placeholder="New task">
     <input type="date" id="taskDate">
-    <button onclick="addTask()">Add</button>
+    <input type="time" id="taskTime">   <!-- NEW -->
+<button onclick="addTask()">Add</button>
+
     <ul id="taskList"></ul>
 
     <h4>⭐ Completed</h4>
@@ -86,27 +88,43 @@
   <p id="reminderText"></p>
   <button onclick="closeReminder()">Okay</button>
 </div>
-<input type="text" id="taskTitle" placeholder="New task">
-
+<div class="card">
+  <h3>🎯 Daily Goals</h3>
+  <ul id="goalsList">
+    <li><input type="checkbox"> Finish homework</li>
+    <li><input type="checkbox"> Drink 8 glasses of water</li>
+    <li><input type="checkbox"> Read 20 pages</li>
+  </ul>
+</div>
 
 
 <div id="catNotification" class="cat-popup hidden">
   🐱 <span id="catMessage"></span>
 </div>
-<div class="block">
-  <h3>⏰ Reminders</h3>
-
-  <input type="datetime-local" id="reminderTime">
-  <input type="text" id="reminderText" placeholder="Reminder text">
-  <button onclick="addReminder()">Set Reminder</button>
-
-  <div id="reminderList"></div>
-</div>
-<div class="block">
-  <h3>📈 Overall Progress</h3>
-  <canvas id="progressChart"></canvas>
-</div>
-
-
 
 <textarea id="notesBox"></textarea>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

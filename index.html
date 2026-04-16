@@ -15,16 +15,15 @@
 
 <script>
 function startApp(){
-  const name=document.getElementById("username").value;
-  if(!name){ alert("Enter name"); return;}
-  localStorage.setItem("plannerUser",name);
-  window.location="dashboard.html";
+  const name = document.getElementById("username").value;
+  if(!name){ 
+    alert("Enter name"); 
+    return;
+  }
+  localStorage.setItem("plannerUser", name);
+  window.location = "dashboard.html";
 }
 </script>
 
 </body>
 </html>
-
-
-
-

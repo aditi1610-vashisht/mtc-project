@@ -29,14 +29,16 @@ greet();
 
 /* TASKS */
 function addTask(){
-  const text=document.getElementById("taskInput").value;
-  const date=document.getElementById("taskDate").value;
-  if(!text||!date)return;
+  const text = document.getElementById("taskInput").value;
+  const date = document.getElementById("taskDate").value;
+  const time = document.getElementById("taskTime").value; // new input field for time
+  if(!text || !date || !time) return;
 
-  tasks.push({text,date,done:false});
-  localStorage.setItem("tasks",JSON.stringify(tasks));
+  tasks.push({ text, date, time, done:false });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
   renderTasks();
 }
+
 
 function renderTasks(){
   const list=document.getElementById("taskList");
@@ -47,14 +49,15 @@ function renderTasks(){
   tasks.forEach((task,i)=>{
     const li=document.createElement("li");
 
-    if(!task.done){
-      li.innerHTML=`${task.text}
-      <button onclick="completeTask(${i})">⭐</button>`;
-      list.appendChild(li);
-    }else{
-      li.innerHTML=`${task.text} ⭐`;
-      doneList.appendChild(li);
-    }
+if(!task.done){
+  li.innerHTML = `${task.text} — ${task.date} at ${task.time}
+    <button onclick="completeTask(${i})">⭐</button>`;
+  list.appendChild(li);
+}else{
+  li.innerHTML = `${task.text} — ${task.date} at ${task.time} ⭐`;
+  doneList.appendChild(li);
+}
+
   });
 }
 function completeTask(i){
@@ -68,28 +71,69 @@ renderTasks();
 let events = JSON.parse(localStorage.getItem("events")) || {};
 let selectedDay = null;
 
-function renderCalendar(){
+function renderCalendar(monthOffset = 0){
   const cal = document.getElementById("calendar");
-  cal.innerHTML="";
+  cal.innerHTML = "";
 
-  const days = 30;
+  const today = new Date();
+  const currentMonth = new Date(today.getFullYear(), today.getMonth() + monthOffset, 1);
 
-  for(let i=1;i<=days;i++){
+  const monthName = currentMonth.toLocaleString("default", { month: "long" });
+  const year = currentMonth.getFullYear();
+
+  // Show header with month + year
+  const header = document.createElement("h4");
+  header.innerText = `${monthName} ${year}`;
+  cal.appendChild(header);
+
+  // Add weekday labels
+  const weekdays = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const weekdayRow = document.createElement("div");
+  weekdayRow.className = "weekday-row";
+  weekdays.forEach(day=>{
+    const wd = document.createElement("div");
+    wd.className = "weekday";
+    wd.innerText = day;
+    weekdayRow.appendChild(wd);
+  });
+  cal.appendChild(weekdayRow);
+
+  // Get number of days in this month
+  const daysInMonth = new Date(year, currentMonth.getMonth() + 1, 0).getDate();
+  const firstDay = currentMonth.getDay(); // starting weekday (0=Sun)
+
+  // Create grid for days
+  const grid = document.createElement("div");
+  grid.className = "calendar-grid";
+
+  // Empty slots before first day
+  for(let i=0; i<firstDay; i++){
+    const empty = document.createElement("div");
+    empty.className = "calendar-day empty";
+    grid.appendChild(empty);
+  }
+
+  // Actual days
+  for(let i=1; i<=daysInMonth; i++){
     const div = document.createElement("div");
-    div.className="calendar-day";
-    div.innerText=i;
+    div.className = "calendar-day";
+    div.innerText = i;
 
-    if(events[i] && events[i].length>0){
+    if(events[i] && events[i].length > 0){
       div.classList.add("has-event");
     }
 
-    div.onclick=function(){
+    div.onclick = function(){
       openModal(i);
     };
 
-    cal.appendChild(div);
+    grid.appendChild(div);
   }
+
+  cal.appendChild(grid);
 }
+
+
 renderCalendar();
 
 function openModal(day){
@@ -145,7 +189,7 @@ function addMedicine(){
   const time=document.getElementById("medTime").value;
   if(!name||!time)return;
 
-  meds.push({name,time});
+  meds.push({name,time,reminded:false});
   localStorage.setItem("meds",JSON.stringify(meds));
   renderMeds();
 }
@@ -213,20 +257,28 @@ setInterval(checkReminders,60000);
 
 function checkReminders(){
   const now = new Date();
-  const currentTime = now.getHours()+":"+String(now.getMinutes()).padStart(2,'0');
+  const currentTime = now.getHours() + ":" + String(now.getMinutes()).padStart(2,'0');
 
+  // Check tasks
   tasks.forEach(task=>{
     if(task.time === currentTime && !task.reminded){
       showReminder(task.text);
       task.reminded = true;
-      localStorage.setItem("tasks",JSON.stringify(tasks));
+      localStorage.setItem("tasks", JSON.stringify(tasks));
     }
   });
 
-  if(medicineTime === currentTime){
-    showReminder("Time to take your medicine 💊");
-  }
+  // Check medicines
+  meds.forEach(med=>{
+    if(med.time === currentTime && !med.reminded){
+      showReminder("Time to take " + med.name + " 💊");
+      med.reminded = true;
+      localStorage.setItem("meds", JSON.stringify(meds));
+      document.getElementById("sound").play(); // optional sound
+    }
+  });
 }
+
 
 function showReminder(text){
   document.getElementById("reminderText").innerText=text;
@@ -346,26 +398,3 @@ setInterval(()=>{
     }
   });
 },10000);
-function updateProgressChart(){
-
-  const total = data.tasks.length;
-  const completed = data.tasks.filter(t=>t.completed).length;
-
-  const percent = total ? Math.round((completed/total)*100) : 0;
-
-  new Chart(document.getElementById("progressChart"),{
-    type:"doughnut",
-    data:{
-      labels:["Completed","Remaining"],
-      datasets:[{
-        data:[percent,100-percent],
-        backgroundColor:["#34c759","#e6e6e6"],
-        borderWidth:0
-      }]
-    },
-    options:{
-      cutout:"70%",
-      plugins:{legend:{display:false}}
-    }
-  });
-}

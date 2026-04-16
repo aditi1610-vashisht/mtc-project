@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pastel Cat Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+
+<div class="login-box">
+  <div class="cat">🐱</div>
+  <h1>heyyy aditi</h1>
+  <input type="text" id="username" placeholder="Enter your name">
+  <button onclick="startApp()">Enter</button>
+</div>
+
+<script>
+function startApp(){
+  const name=document.getElementById("username").value;
+  if(!name){ alert("Enter name"); return;}
+  localStorage.setItem("plannerUser",name);
+  window.location="dashboard.html";
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
